@@ -16,6 +16,10 @@ class Herbivore extends Animal {
     super(name);
     this.hidden = hidden;
   }
+
+  hide() {
+    this.hidden = true;
+  }
 }
 
 class Carnivore extends Animal {
@@ -28,14 +32,7 @@ class Carnivore extends Animal {
     if (herbivore instanceof Herbivore && !herbivore.hidden) {
       herbivore.health -= 50;
     }
-
-    if (herbivore.health <= 0) {
-      const herbIndex = Animal.alive.findIndex((anima) => anima === herbivore);
-
-      if (herbIndex !== -1) {
-        Animal.alive.splice(herbIndex, 1);
-      }
-    }
+    Animal.alive = Animal.alive.filter((animal) => animal.health > 0);
   }
 }
 
@@ -44,14 +41,3 @@ module.exports = {
   Herbivore,
   Carnivore,
 };
-
-const animal1 = new Herbivore('pig');
-const animal2 = new Carnivore('tiger');
-
-console.log(animal1);
-console.log(animal2);
-console.log(Animal.alive);
-animal2.bite(animal1);
-
-animal2.bite(animal1);
-console.log(Animal.alive);
